@@ -13,7 +13,7 @@ Compatible devices have been sold in Europe under the following brands:
 * Anslut / Proove / Nexa / Telldus (Sweden)
 * etc.
 
-This package is designed to work well with [Home Assistant](https://www.home-assistant.io/). 
+This package is designed to work with [Home Assistant](https://www.home-assistant.io/). 
 
 
 ## Protocol
@@ -33,14 +33,25 @@ GPIO/BCM 17 | DATA
 For diagrams, see https://pinout.xyz/ and https://tutorials-raspberrypi.com/control-raspberry-pi-wireless-sockets-433mhz-tutorial/.  (The square module is the 433 MHz transmitter; the rectangular module is the 433 MHz receiver, not used here.)
 
 
+## Installation
+
+    $ pip install pi-homeeasy
+
+
 ## Usage
 
-    $ python3 -m venv env
-    $ source env/bin/activate
-    (env) $ cd pi_homeeasy
-    (env) $ pip install -r requirements.txt
-    (env) $ python main.py 12345678 1 on
-    # or
-    (env) $ python
+### Command Line
+
+See `pi-homeeasy -h` for usage options.
+
+Example:
+
+    $ pi-homeeasy 12345678 1 on
+
+### Python API
+
+Example:
+
+    $ python
     >>> import pi_homeeasy
-    >>> pi_homeeasy.send(17, 12325262, 1, True)
+    >>> pi_homeeasy.send(17, 12345678, 1, True)

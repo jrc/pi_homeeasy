@@ -42,7 +42,7 @@ For diagrams, see https://pinout.xyz/ and https://tutorials-raspberrypi.com/cont
 
 ### Command Line
 
-See `pi-homeeasy -h` for usage options.
+Run `pi-homeeasy -h` for usage help.
 
 Example:
 

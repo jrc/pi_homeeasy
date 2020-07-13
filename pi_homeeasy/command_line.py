@@ -33,7 +33,7 @@ def main():
     parser.add_argument(
         "receiver_id",
         type=functools.partial(_int_range_check, -1, 15),
-        help="Receiver number, or -1 for group command.",
+        help="Receiver number. -1 for group command (if supported by device).",
     )
     parser.add_argument("command", choices=["on", "off"], help="Command to send.")
 

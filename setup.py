@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pi_homeeasy",
-    version="0.0.1",
+    version="0.0.2",
     author="John Chang",
     author_email="jrcplus+pypi@gmail.com",
-    description="Python wrapper of Nenad Bogojevic's piHomeEasy tool",
+    description="Control 433 MHz RF self-learning power outlets (HomeEasy/Nexa/etc.) from a Raspberry Pi",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/jrc/pi_homeeasy",
@@ -17,7 +17,7 @@ setuptools.setup(
         "Development Status :: 2 - Pre-Alpha",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Topic :: Home Automation"
+        "Topic :: Home Automation",
     ],
-    python_requires='>=3.6',
+    python_requires=">=3.6",
 )

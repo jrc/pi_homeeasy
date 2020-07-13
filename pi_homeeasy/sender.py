@@ -1,20 +1,19 @@
 # Python port of https://github.com/nbogojevic/piHomeEasy/
 
-try:
-    import RPi.GPIO as GPIO
-except ImportError:
-    pass
-
-import argparse
-import functools
 import logging
 import sys
 import time
 
 
-logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger_str = ""
+
+
+try:
+    import RPi.GPIO as GPIO
+except ImportError as e:
+    logger.error("Can't import RPi.GPIO ({}). Enabling debug logging.".format(e))
+    logger.setLevel(logging.DEBUG)
 
 
 def digital_write(pin: int, value: bool) -> None:
@@ -71,7 +70,7 @@ def send_value(pin: int, value: int, length: int) -> None:
         length -= 1
 
 
-def _send(pin: int, emitter: int, receiver: int, on_off: bool) -> None:
+def _send_once(pin: int, emitter: int, receiver: int, on_off: bool) -> None:
     global logger_str
 
     # Do the latch sequence..
@@ -120,50 +119,9 @@ def send(pin: int, emitter: int, receiver: int, on_off: bool) -> None:
         GPIO.setup(pin, GPIO.OUT)
 
     try:
-        for _ in range(3):  # Repeat 3x
-            _send(pin, emitter, receiver, on_off)
+        for _ in range(4):
+            _send_once(pin, emitter, receiver, on_off)
+            delay_microseconds(10)
     finally:
         if "RPi.GPIO" in sys.modules:
             GPIO.cleanup()
-
-
-def main():
-    def _int_range_check(min_value, max_value, string):
-        value = int(string)
-        if value < min_value or value > max_value:
-            raise argparse.ArgumentTypeError(
-                f"Must be integer between {min_value} and {max_value}"
-            )
-        return value
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--debug", action="store_true")
-    parser.add_argument(
-        "-p",
-        "--pin",
-        type=int,
-        default=17,
-        help="BCM pin number (see https://pinout.xyz/) Default: 17.",
-    )
-    parser.add_argument(
-        "emitter_id",
-        type=functools.partial(_int_range_check, 1, (1 << 26) - 1),
-        help="Unique emitter number. Example: 12325262.",
-    )
-    parser.add_argument(
-        "receiver_id",
-        type=functools.partial(_int_range_check, -1, 15),
-        help="Receiver number, or -1 for group command.",
-    )
-    parser.add_argument("command", choices=["on", "off"], help="Command to send.")
-
-    args = parser.parse_args()
-
-    if args.debug:
-        logger.setLevel(logging.DEBUG)
-
-    send(args.pin, args.emitter_id, args.receiver_id, (args.command == "on"))
-
-
-if __name__ == "__main__":
-    main()

@@ -70,57 +70,57 @@ def send_value(pin: int, value: int, length: int) -> None:
         length -= 1
 
 
-def _send_once(pin: int, emitter: int, receiver: int, on_off: bool) -> None:
+def _send_once(emitter: int, receiver: int, on_off: bool, gpio_pin: int = 17) -> None:
     global logger_str
 
     # Do the latch sequence..
-    digital_write(pin, True)
+    digital_write(gpio_pin, True)
     delay_microseconds(275)  # bit of radio shouting before we start.
-    digital_write(pin, False)
+    digital_write(gpio_pin, False)
     delay_microseconds(9900)  # False for 9900 for latch 1
-    digital_write(pin, True)  # True
+    digital_write(gpio_pin, True)  # True
     delay_microseconds(275)  # wait a moment 275µs
-    digital_write(pin, False)  # False again for 2675µs - latch
+    digital_write(gpio_pin, False)  # False again for 2675µs - latch
     delay_microseconds(2675)
     # End on a True
-    digital_write(pin, True)
+    digital_write(gpio_pin, True)
 
     # Send emitter code (26 bits, 0-25)
-    send_value(pin, emitter, 26)
+    send_value(gpio_pin, emitter, 26)
     logger_str += f"(#{emitter}) "
 
     # Send group flag (always 0, bit 26)
     # Group activates all receivers associated to an emitter
     # Receiver code of -1 means activate group
-    send_pair(pin, (receiver == -1))
+    send_pair(gpio_pin, (receiver == -1))
     logger_str += f"({(receiver == -1)}) "
 
     # Send command on or off (bit 27)
     # This command can be sent as 11 (not only as 01 or 10).
     # In that case it is dimmer command, and another 4 bits need to be sent. This is not supported.
-    send_pair(pin, on_off)
+    send_pair(gpio_pin, on_off)
     logger_str += f"({on_off}) "
 
     # Send device code as 4 bits (bits 27-31)
-    send_value(pin, (receiver if receiver >= 0 else 0), 4)
+    send_value(gpio_pin, (receiver if receiver >= 0 else 0), 4)
     logger_str += f"(#{(receiver if receiver >= 0 else 0)}) "
 
-    digital_write(pin, True)  # Ending latch
+    digital_write(gpio_pin, True)  # Ending latch
     delay_microseconds(275)  # wait 275µs
-    digital_write(pin, False)  # and finish signal for 2675µs
+    digital_write(gpio_pin, False)  # and finish signal for 2675µs
 
     logger.debug(logger_str)
     logger_str = ""
 
 
-def send(pin: int, emitter: int, receiver: int, on_off: bool) -> None:
+def send(emitter: int, receiver: int, on_off: bool, gpio_pin: int) -> None:
     if "RPi.GPIO" in sys.modules:
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(pin, GPIO.OUT)
+        GPIO.setup(gpio_pin, GPIO.OUT)
 
     try:
         for _ in range(4):
-            _send_once(pin, emitter, receiver, on_off)
+            _send_once(on_off, emitter, receiver, gpio_pin)
             delay_microseconds(10)
     finally:
         if "RPi.GPIO" in sys.modules:

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pi-homeeasy",
-    version="0.0.4",
+    version="0.0.5",
     author="John Chang",
     author_email="jrcplus+pypi@gmail.com",
     description="Control 433 MHz RF self-learning power outlets (HomeEasy, Nexa, etc.) from a Raspberry Pi",

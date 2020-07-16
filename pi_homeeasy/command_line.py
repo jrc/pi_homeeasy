@@ -22,7 +22,6 @@ def main():
         "-p",
         "--pin",
         type=int,
-        default=17,
         help="BCM pin number (see https://pinout.xyz/) Default: 17.",
     )
     parser.add_argument(
@@ -43,7 +42,7 @@ def main():
         logging.getLogger().setLevel(logging.DEBUG)
 
     pi_homeeasy.send(
-        args.pin, args.emitter_id, args.receiver_id, (args.command == "on")
+        args.emitter_id, args.receiver_id, (args.command == "on"), args.pin,
     )
 
 

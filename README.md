@@ -54,4 +54,4 @@ Example:
 
     $ python
     >>> import pi_homeeasy
-    >>> pi_homeeasy.send(17, 12345678, 1, True)
+    >>> pi_homeeasy.send(12345678, 1, True, 17)

@@ -17,14 +17,14 @@ except ImportError as e:
 
 
 def digital_write(pin: int, value: bool) -> None:
-    """Simulate Arduino/wiringPi digitalWrite().
+    """Like Arduino/wiringPi's digitalWrite().
     """
     if "RPi.GPIO" in sys.modules:
         GPIO.output(pin, (GPIO.HIGH if value else GPIO.LOW))
 
 
 def delay_microseconds(us) -> None:
-    """Simulate Arduino/wiringPi delayMicroseconds().
+    """Like Arduino/wiringPi's delayMicroseconds().
 
     Note: Due to limitations of Python and Linux (Raspberry Pi OS),
     this may not perform precisely for small delay times.
@@ -120,7 +120,7 @@ def send(emitter: int, receiver: int, on_off: bool, gpio_pin: int) -> None:
 
     try:
         for _ in range(4):
-            _send_once(on_off, emitter, receiver, gpio_pin)
+            _send_once(emitter, receiver, on_off, gpio_pin)
             delay_microseconds(10)
     finally:
         if "RPi.GPIO" in sys.modules:

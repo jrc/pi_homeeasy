@@ -22,6 +22,7 @@ def main():
         "-p",
         "--pin",
         type=int,
+        default=17,
         help="BCM pin number (see https://pinout.xyz/) Default: 17.",
     )
     parser.add_argument(

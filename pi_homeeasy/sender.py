@@ -70,7 +70,7 @@ def send_value(pin: int, value: int, length: int) -> None:
         length -= 1
 
 
-def _send_once(emitter: int, receiver: int, on_off: bool, gpio_pin: int = 17) -> None:
+def _send_once(emitter: int, receiver: int, on_off: bool, gpio_pin: int) -> None:
     global logger_str
 
     # Do the latch sequence..

@@ -28,7 +28,7 @@ def main():
     parser.add_argument(
         "emitter_id",
         type=functools.partial(_int_range_check, 1, (1 << 26) - 1),
-        help="Unique emitter number. Example: 12325262.",
+        help="Unique emitter number. Example: 52078445.",
     )
     parser.add_argument(
         "receiver_id",

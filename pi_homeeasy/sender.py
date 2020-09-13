@@ -101,7 +101,7 @@ def _send_once(emitter: int, receiver: int, on_off: bool, gpio_pin: int) -> None
     send_pair(gpio_pin, on_off)
     logger_str += f"({on_off}) "
 
-    # Send device code as 4 bits (bits 27-31)
+    # Send device code as 4 bits (bits 28-31)
     send_value(gpio_pin, (receiver if receiver >= 0 else 0), 4)
     logger_str += f"(#{(receiver if receiver >= 0 else 0)}) "
 
@@ -119,7 +119,7 @@ def send(emitter: int, receiver: int, on_off: bool, gpio_pin: int) -> None:
         GPIO.setup(gpio_pin, GPIO.OUT)
 
     try:
-        for _ in range(4):
+        for _ in range(5):
             _send_once(emitter, receiver, on_off, gpio_pin)
             delay_microseconds(10)
     finally:

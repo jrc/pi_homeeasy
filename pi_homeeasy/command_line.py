@@ -43,7 +43,10 @@ def main():
         logging.getLogger().setLevel(logging.DEBUG)
 
     pi_homeeasy.send(
-        args.emitter_id, args.receiver_id, (args.command == "on"), args.pin,
+        args.emitter_id,
+        args.receiver_id,
+        (args.command == "on"),
+        args.pin,
     )
 
 

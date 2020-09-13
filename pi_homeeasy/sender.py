@@ -17,8 +17,7 @@ except ImportError as e:
 
 
 def digital_write(pin: int, value: bool) -> None:
-    """Like Arduino/wiringPi's digitalWrite().
-    """
+    """Like Arduino/wiringPi's digitalWrite()."""
     if "RPi.GPIO" in sys.modules:
         GPIO.output(pin, (GPIO.HIGH if value else GPIO.LOW))
 
@@ -33,10 +32,10 @@ def delay_microseconds(us) -> None:
 
 
 def send_bit(pin: int, b: bool) -> None:
-    """Send a bit pulse (describes 0 or 1) 
+    """Send a bit pulse (describes 0 or 1)
     1 = 310µs high then 1340µs low
     0 = 310µs high then 310µs low
-    Encoding is a manchester code  
+    Encoding is a manchester code
     See: http://en.wikipedia.org/wiki/Manchester_code
     """
     digital_write(pin, True)
@@ -61,8 +60,7 @@ def send_pair(pin: int, b: bool) -> None:
 
 
 def send_value(pin: int, value: int, length: int) -> None:
-    """Sends value as binary of given length
-    """
+    """Sends value as binary of given length"""
     length -= 1
     while length >= 0:
         b = (value & (1 << length)) != 0

@@ -1,0 +1,7 @@
+{
+    "domain": "rpi_rf_homeeasy",
+    "name": "Raspberry Pi RF HomeEasy/Nexa",
+    "requirements": [
+        "git+https://github.com/jrc/pi_homeeasy.git#pi_homeeasy>=0.0.7"
+    ]
+}

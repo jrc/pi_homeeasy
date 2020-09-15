@@ -13,7 +13,7 @@ Compatible devices have been sold in Europe under the following brands:
 * Anslut / Proove / Nexa / Telldus (Sweden)
 * etc.
 
-This package is designed to work with [Home Assistant](https://www.home-assistant.io/). 
+This package is designed to work with [Home Assistant](https://www.home-assistant.io/). See [`homeassistant/README.md`](homeassistant/README.md) for info.
 
 
 ## Protocol
